@@ -31,9 +31,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequest ->
                         authorizeRequest
                                 .requestMatchers(
-                                        "/h2-console/**",
-                                        "/auth/manager/signup",
-                                        "/auth/manager/signin"
+//                                        "/h2-console/**",
+//                                        "/auth/manager/signup",
+//                                        "/auth/manager/signin"
+                                        "/**"
                                 ).permitAll()
                 )
                 .headers(

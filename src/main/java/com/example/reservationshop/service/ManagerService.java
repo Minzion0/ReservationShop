@@ -47,7 +47,7 @@ public class ManagerService implements UserDetailsService {
         ManagerEntity managerEntity = managerRepository.findByUsername(manager.getUsername())
                 .orElseThrow(() -> new RuntimeException("존재 하지 않는 ID 입니다. ->" + manager.getUsername()));
 
-        if (this.passwordEncoder.matches(manager.getPassword(),managerEntity.getPassword())){
+        if (!this.passwordEncoder.matches(manager.getPassword(),managerEntity.getPassword())){
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
 
         }

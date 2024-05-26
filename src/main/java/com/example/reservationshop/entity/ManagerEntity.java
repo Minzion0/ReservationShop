@@ -23,8 +23,10 @@ public class ManagerEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false)
     private String password;
     @Convert(converter = StringListConverter.class)
@@ -53,12 +55,12 @@ public class ManagerEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override
