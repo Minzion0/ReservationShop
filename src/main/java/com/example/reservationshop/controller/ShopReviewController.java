@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/shop")
 public class ShopReviewController {
 
@@ -26,6 +25,6 @@ public class ShopReviewController {
         return null;
     }
 
-    
+
 
 }

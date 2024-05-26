@@ -24,7 +24,7 @@ public class ManagerEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String username;
     @Column(nullable = false)
     private String password;
     @Convert(converter = StringListConverter.class)
@@ -32,9 +32,9 @@ public class ManagerEntity implements UserDetails {
 
 
 
-    private ManagerEntity(String name, String password, List<String> roles) {
+    private ManagerEntity(String username, String password, List<String> roles) {
         this.id = null;
-        this.name = name;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }

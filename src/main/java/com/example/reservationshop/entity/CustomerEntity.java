@@ -25,15 +25,15 @@ public class CustomerEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String username;
     @Column(nullable = false)
     private String password;
     @Convert(converter = StringListConverter.class)
     private List<String> roles;
 
-    private CustomerEntity(String name, String password, List<String> roles) {
+    private CustomerEntity(String username, String password, List<String> roles) {
         this.id = null;
-        this.name = name;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }

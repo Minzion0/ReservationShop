@@ -23,7 +23,7 @@ public class ShopReservationController {
         return null;
     }
 
-    @PostMapping("/reservation")
+    @PatchMapping("/reservation")
     public ResponseEntity<?> shopCheckIn(){return null;}
 
 
