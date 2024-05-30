@@ -1,6 +1,7 @@
 package com.example.reservationshop.service;
 
 import com.example.reservationshop.entity.ShopEntity;
+import com.example.reservationshop.model.Shop;
 import com.example.reservationshop.repository.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class ShopService {
     private final ShopRepository shopRepository;
 
-    public ShopEntity createShop(){
-        
+    public ShopEntity createShop(Shop.Request request){
+        return null;
     }
 }

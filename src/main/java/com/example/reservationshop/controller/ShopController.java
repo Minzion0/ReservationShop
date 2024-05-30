@@ -1,5 +1,7 @@
 package com.example.reservationshop.controller;
 
+import com.example.reservationshop.model.Shop;
+import com.example.reservationshop.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ShopController {
 
+    private final ShopService shopService;
     @PostMapping
-    public ResponseEntity<?> createShop() {
+    public ResponseEntity<?> createShop(@RequestBody Shop.Request request) {
+        this.shopService.createShop(request);
         return null;
     }
 
