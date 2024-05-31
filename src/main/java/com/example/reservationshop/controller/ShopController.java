@@ -1,5 +1,6 @@
 package com.example.reservationshop.controller;
 
+import com.example.reservationshop.entity.ShopEntity;
 import com.example.reservationshop.model.Shop;
 import com.example.reservationshop.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class ShopController {
     private final ShopService shopService;
     @PostMapping
     public ResponseEntity<?> createShop(@RequestBody Shop.Request request) {
-        this.shopService.createShop(request);
-        return null;
+        ShopEntity shop = this.shopService.createShop(request);
+        return ResponseEntity.ok(shop);
     }
 
     @GetMapping

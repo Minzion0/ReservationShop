@@ -13,6 +13,7 @@ public class ShopService {
     private final ShopRepository shopRepository;
 
     public ShopEntity createShop(Shop.Request request){
-        return null;
+        ShopEntity shopEntity = ShopEntity.from(null, request);
+        return shopRepository.save(shopEntity);
     }
 }
