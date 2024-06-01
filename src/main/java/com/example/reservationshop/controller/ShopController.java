@@ -24,6 +24,7 @@ public class ShopController {
 
     @GetMapping
     public ResponseEntity<?> shopList(final Pageable pageable) {
+        this.shopService.shopList(pageable);
         return null;
     }
 
