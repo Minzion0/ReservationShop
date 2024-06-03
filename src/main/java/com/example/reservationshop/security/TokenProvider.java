@@ -59,7 +59,7 @@ public class TokenProvider {
      */
     public Authentication getAuthentication(String token) {
         UserDetails userDetails;
-        if (Role.ROLE_CUSTOMER.getRole().equals(this.getRoles(token))){
+        if (Role.ROLE_CUSTOMER.toString().equals(this.getRoles(token))){
            userDetails =
                    this.customerService.loadUserByUsername(this.getUsername(token));
         }else {

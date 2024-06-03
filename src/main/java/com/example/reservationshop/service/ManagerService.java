@@ -25,7 +25,7 @@ public class ManagerService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         return this.managerRepository.findByUsername(username)
-                .orElseThrow(()-> new RuntimeException("존재 하지 않는 ID 입니다. ->"+username));
+                .orElseThrow(()-> new UsernameNotFoundException("존재 하지 않는 ID 입니다. ->"+username));
 
     }
     @Transactional

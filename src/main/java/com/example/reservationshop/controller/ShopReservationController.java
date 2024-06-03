@@ -1,8 +1,12 @@
 package com.example.reservationshop.controller;
 
+import com.example.reservationshop.entity.CustomerEntity;
+import com.example.reservationshop.model.Reservation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +18,9 @@ import java.time.LocalDateTime;
 public class ShopReservationController {
 
     @PostMapping("/reservation")
-    public ResponseEntity<?> reservationShop() {
+    public ResponseEntity<?> reservationShop(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Reservation.Request request) {
+        CustomerEntity customerEntity = (CustomerEntity) userDetails;
+
         return null;
     }
 

@@ -1,8 +1,10 @@
 package com.example.reservationshop.controller;
 
+import com.example.reservationshop.entity.CustomerEntity;
 import com.example.reservationshop.entity.ManagerEntity;
 import com.example.reservationshop.model.Auth;
 import com.example.reservationshop.security.TokenProvider;
+import com.example.reservationshop.service.CustomerService;
 import com.example.reservationshop.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final CustomerService customerService;
     private final ManagerService managerService;
     private final TokenProvider tokenProvider;
     @PostMapping("/manager/signup")
@@ -39,13 +42,17 @@ public class AuthController {
     }
 
     @PostMapping("/shop/signup")
-    public ResponseEntity<?> signup() {
-        return null;
+    public ResponseEntity<?> signup(@RequestBody Auth.SignUp request) {
+        CustomerEntity customerEntity = customerService.signUpCustomer(request);
+
+        return ResponseEntity.ok(customerEntity);
     }
 
     @PostMapping("/shop/signin")
-    public ResponseEntity<?> signin() {
-        return null;
+    public ResponseEntity<?> signin(@RequestBody Auth.SignIn request) {
+        CustomerEntity customerEntity = customerService.signInCustomer(request);
+        String token = tokenProvider.generateToken(customerEntity.getUsername(), customerEntity.getRoles());
+        return ResponseEntity.ok(token);
     }
 
 }

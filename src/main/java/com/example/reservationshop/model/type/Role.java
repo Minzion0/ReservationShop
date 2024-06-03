@@ -1,17 +1,15 @@
 package com.example.reservationshop.model.type;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
+@AllArgsConstructor
 public enum Role {
-    ROLE_MANAGER("manager"),
-    ROLE_EMPLOYEE("employee"),
-    ROLE_CUSTOMER("customer");
+    ROLE_MANAGER("MANAGER"),
+    ROLE_EMPLOYEE("EMPLOYEE"),
+    ROLE_CUSTOMER("CUSTOMER");
 
-    private String role;
+    private final String role;
 
-    Role(String role) {
-        this.role = role;
-    }
 }

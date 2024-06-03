@@ -18,10 +18,8 @@ public class ReservationShopEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn
     private ShopEntity shopId;
     @ManyToOne
-    @JoinColumn
     private CustomerEntity customerId;
     private LocalDateTime reservationTime;
     private int checkIn;
