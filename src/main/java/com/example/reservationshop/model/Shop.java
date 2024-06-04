@@ -16,9 +16,10 @@ public class Shop {
         private String shopName;
         private String arr;
         private String document;
+        private int tableCount;
 
         public static ShopEntity toEntity(ManagerEntity managerId, Shop.Request request){
-            return ShopEntity.from(managerId,request.getShopName(), request.arr,request.getDocument());
+            return ShopEntity.from(managerId,request.getShopName(), request.getArr(),request.getDocument(), request.getTableCount());
         }
     }
     @Data
@@ -29,7 +30,7 @@ public class Shop {
         private String document;
 
         public static ShopEntity toEntity(Long shopId,ManagerEntity managerId, Shop.Request request){
-            return ShopEntity.from(shopId,managerId,request.getShopName(), request.getArr(),request.getDocument());
+            return ShopEntity.from(shopId,managerId,request.getShopName(), request.getArr(),request.getDocument(), request.getTableCount());
         }
 
     }

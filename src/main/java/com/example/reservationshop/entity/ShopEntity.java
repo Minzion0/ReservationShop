@@ -4,6 +4,8 @@ import com.example.reservationshop.model.Shop;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @ToString
 @NoArgsConstructor
@@ -21,32 +23,44 @@ public class ShopEntity {
     private String shopName;
     @Column(nullable = false)
     private String arr;
+    private int tableCount; // 테이블 수 추가
+    private double averageRating; // 평균 별점 추가
 
-    private ShopEntity (ManagerEntity managerId,String shopName,String document,String arr){
+    @OneToMany(mappedBy = "shopId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReservationShopEntity> reservations;
+
+    @OneToMany(mappedBy = "shopId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewShopEntity> reviews;
+
+    private ShopEntity (ManagerEntity managerId,String shopName,String document,String arr,int tableCount){
         this.id=null;
         this.managerId=managerId;
         this.document=document;
         this.shopName=shopName;
         this.arr=arr;
+        this.tableCount=tableCount;
+        this.averageRating=0;
     }
 
-    private ShopEntity (Long shopId,ManagerEntity managerId,String shopName,String document,String arr){
+    private ShopEntity (Long shopId,ManagerEntity managerId,String shopName,String document,String arr,int tableCount){
         this.id=shopId;
         this.managerId=managerId;
         this.document=document;
         this.shopName=shopName;
         this.arr=arr;
+        this.tableCount=tableCount;
+        this.averageRating=0;
     }
 
-    public static ShopEntity from(ManagerEntity managerId,String shopName,String document,String arr){
-        return new ShopEntity(managerId,shopName,document,arr);
+    public static ShopEntity from(ManagerEntity managerId,String shopName,String document,String arr,int tableCount){
+        return new ShopEntity(managerId,shopName,document,arr,tableCount);
     }
     public static ShopEntity from(ManagerEntity managerId, Shop.Request request){
-        return new ShopEntity(managerId,request.getShopName(),request.getDocument(),request.getArr());
+        return new ShopEntity(managerId,request.getShopName(),request.getDocument(),request.getArr(),request.getTableCount());
     }
 
-    public static ShopEntity from(Long shopId,ManagerEntity managerId,String shopName,String document,String arr){
-        return new ShopEntity(shopId,managerId,shopName,document,arr);
+    public static ShopEntity from(Long shopId,ManagerEntity managerId,String shopName,String document,String arr,int tableCount){
+        return new ShopEntity(shopId,managerId,shopName,document,arr,tableCount);
     }
 
     public ShopEntity modify(Shop.Modify request){
@@ -60,6 +74,10 @@ public class ShopEntity {
             this.document=request.getDocument();
         }
         return this;
+    }
+
+    public void reviewAverageRating(int averageRating){
+        this.averageRating=averageRating;
     }
 }
 

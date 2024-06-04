@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReservationShopRepository extends JpaRepository<ReservationShopEntity,Long> {
 
-    List<ReservationShopEntity>findByShopIdAndReservationTimeBetween(ShopEntity shopEntity, LocalDateTime reservationTime,LocalDateTime endTime);
+    Optional<List<ReservationShopEntity>>findByShopIdAndReservationTimeBetween(ShopEntity shopEntity, LocalDateTime reservationTime, LocalDateTime endTime);
+
 }

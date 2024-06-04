@@ -36,4 +36,10 @@ public class ReservationShopEntity {
         return new ReservationShopEntity(shopId,customerId,reservationTime);
     }
 
+    public ReservationShopEntity checkIn(){
+        this.checkIn=1;
+
+        return this;
+    }
+
 }
