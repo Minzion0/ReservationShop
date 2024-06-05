@@ -1,5 +1,6 @@
 package com.example.reservationshop.entity;
 
+import com.example.reservationshop.model.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,23 +18,24 @@ public class ReviewShopEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private ShopEntity shopId;
-    @ManyToOne
-    private ReservationShopEntity reviewId;
+    private ReservationShopEntity reservationId;
     @Column(nullable = false,length = 5)
     private float reviewRating;
     @Column(nullable = false,length = 10)
     private String document;
 
-    private ReviewShopEntity(ShopEntity shopId,ReservationShopEntity reviewId,float reviewRating,String document){
+    private ReviewShopEntity( ReservationShopEntity reservationId, float reviewRating, String document){
         this.id=null;
-        this.shopId=shopId;
-        this.reviewId=reviewId;
+        this.reservationId = reservationId;
         this.reviewRating=reviewRating;
         this.document=document;
     }
 
-    public static ReviewShopEntity from(ShopEntity shopId,ReservationShopEntity reviewId,float reviewRating,String document){
-        return new ReviewShopEntity(shopId,reviewId,reviewRating,document);
+//    public static ReviewShopEntity from(ReservationShopEntity reviewId,float reviewRating,String document){
+//        return new ReviewShopEntity(reviewId,reviewRating,document);
+//    }
+
+    public static ReviewShopEntity from(ReservationShopEntity reservationId,Review.Request request){
+      return new ReviewShopEntity(reservationId,request.getShopRating(),request.getDocument());
     }
 }
