@@ -37,4 +37,13 @@ public class ShopReviewService {
 
         return this.shopReviewRepository.save(reviewShopEntity);
     }
+    @Transactional(readOnly = true)
+    public ReviewShopEntity shopReviewUpdate(CustomerEntity customerEntity, Review.Update request) {
+        ReviewShopEntity reviewShopEntity = shopReviewRepository.findById(request.getReviewId()).orElseThrow(() -> new RuntimeException("해당 리뷰가 존재하지 않습니다."));
+        if (!Objects.equals(reviewShopEntity.getReservationId().getCustomerId().getId(), customerEntity.getId())){
+            throw new RuntimeException("본인만 리뷰수정이 가능합니다.");
+        }
+
+        return reviewShopEntity.update(request);
+    }
 }

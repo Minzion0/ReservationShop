@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Getter
@@ -37,5 +38,15 @@ public class ReviewShopEntity {
 
     public static ReviewShopEntity from(ReservationShopEntity reservationId,Review.Request request){
       return new ReviewShopEntity(reservationId,request.getShopRating(),request.getDocument());
+    }
+
+    public ReviewShopEntity update(Review.Update request){
+        if (StringUtils.hasText(request.getDocument())){
+            this.document=request.getDocument();
+        }
+        if (request.getShopRating()>0){
+            this.reviewRating=request.getShopRating();
+        }
+        return this;
     }
 }

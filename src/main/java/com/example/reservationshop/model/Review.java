@@ -10,4 +10,13 @@ public class Review {
         private String document;
 
     }
+    @Data
+    public static class Update{
+        private Long ReviewId;
+        private Float shopRating;
+        private String document;
+
+    }
+
+
 }

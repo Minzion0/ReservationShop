@@ -27,12 +27,15 @@ public class ShopReviewController {
     }
 
     @PatchMapping("/review")
-    public ResponseEntity<?> shopReviewPatch(){
-        return null;
+    public ResponseEntity<?> shopReviewUpdate(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Review.Update request){
+        CustomerEntity customerEntity = (CustomerEntity) userDetails;
+        ReviewShopEntity reviewShopEntity = shopReviewService.shopReviewUpdate(customerEntity,request);
+        return ResponseEntity.ok(reviewShopEntity);
     }
 
     @DeleteMapping("/review")
     public ResponseEntity<?> deleteShopReview(){
+        
         return null;
     }
 
