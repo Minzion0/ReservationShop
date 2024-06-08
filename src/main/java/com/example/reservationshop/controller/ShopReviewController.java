@@ -3,7 +3,6 @@ package com.example.reservationshop.controller;
 import com.example.reservationshop.entity.CustomerEntity;
 import com.example.reservationshop.entity.ReviewShopEntity;
 import com.example.reservationshop.model.Review;
-import com.example.reservationshop.service.ShopReservationService;
 import com.example.reservationshop.service.ShopReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +32,10 @@ public class ShopReviewController {
         return ResponseEntity.ok(reviewShopEntity);
     }
 
-    @DeleteMapping("/review")
-    public ResponseEntity<?> deleteShopReview(){
-        
-        return null;
+    @DeleteMapping("/review/{reviewId}")
+    public ResponseEntity<?> deleteShopReview(@AuthenticationPrincipal UserDetails userDetails,@PathVariable Long reviewId){
+        this.shopReviewService.deleteShopReview(userDetails,reviewId);
+        return ResponseEntity.ok(1);
     }
 
 

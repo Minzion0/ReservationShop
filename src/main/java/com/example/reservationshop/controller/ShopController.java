@@ -35,6 +35,12 @@ public class ShopController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/{shopId}")
+    public ResponseEntity<?>ShopDetail(@PathVariable Long shopId){
+        Shop.Detail detail = shopService.shopDetail(shopId);
+        return ResponseEntity.ok(detail);
+    }
+
     @PatchMapping
     public ResponseEntity<?> modifyShop(@AuthenticationPrincipal UserDetails userDetails,@RequestBody Shop.Modify request){
         ManagerEntity manager = (ManagerEntity) userDetails;

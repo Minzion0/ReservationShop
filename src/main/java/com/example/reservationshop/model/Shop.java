@@ -40,6 +40,7 @@ public class Shop {
         private Long shopId;
         private String shopName;
         private String arr;
+        private double averageRating;
 
         public static Page<Shop.Response> toPage(Page<ShopEntity> shopEntities){
             List<Response> responses = shopEntities.stream().map(item -> {
@@ -47,12 +48,23 @@ public class Shop {
                         .shopId(item.getId())
                         .shopName(item.getShopName())
                         .arr(item.getArr())
+                        .averageRating(item.getAverageRating())
                         .build();
             }).collect(Collectors.toList());
 
             return new PageImpl<>(responses,shopEntities.getPageable(),shopEntities.getTotalElements());
         }
 
+    }
+    @Data
+    @Builder
+    public static class Detail{
+        private Long shopId;
+        private String shopName;
+        private String arr;
+        private String document;
+        private double averageRating;
+        private List<Review.Response> reviews;
     }
 
 

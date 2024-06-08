@@ -20,14 +20,14 @@ import java.util.List;
 @RequestMapping("/shop")
 public class ShopReservationController {
     private final ShopReservationService shopReservationService;
-    @PostMapping("/reservation")
-    public ResponseEntity<?> reservationShop(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Reservation.Request request) {
+    @PostMapping("/{shopId}/reservation")
+    public ResponseEntity<?> reservationShop(@AuthenticationPrincipal UserDetails userDetails,@PathVariable Long shopId, @RequestBody Reservation.Request request) {
         CustomerEntity customerEntity = (CustomerEntity) userDetails;
-        ReservationShopEntity reservationShopEntity = shopReservationService.makeReservation(request, customerEntity);
+        ReservationShopEntity reservationShopEntity = shopReservationService.makeReservation(shopId,request, customerEntity);
         return ResponseEntity.ok(reservationShopEntity);
     }
 
-    @GetMapping("/reservation/{shopId}")
+    @GetMapping("/{shopId}/reservation")
     public ResponseEntity<?> serchReservationShop(@PathVariable Long shopId,@RequestParam LocalDate date) {
         List<Reservation.Response> responses = shopReservationService.serchReservationShop(shopId, date);
         return ResponseEntity.ok(responses);

@@ -26,10 +26,10 @@ public class ShopEntity {
     private int tableCount; // 테이블 수 추가
     private double averageRating; // 평균 별점 추가
 
-    @OneToMany(mappedBy = "shopId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservationShopEntity> reservations;
 
-    @OneToMany(mappedBy = "shopId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewShopEntity> reviews;
 
     private ShopEntity (ManagerEntity managerId,String shopName,String document,String arr,int tableCount){
@@ -39,7 +39,7 @@ public class ShopEntity {
         this.shopName=shopName;
         this.arr=arr;
         this.tableCount=tableCount;
-        this.averageRating=0;
+        this.averageRating=0.0;
     }
 
     private ShopEntity (Long shopId,ManagerEntity managerId,String shopName,String document,String arr,int tableCount){
@@ -49,7 +49,7 @@ public class ShopEntity {
         this.shopName=shopName;
         this.arr=arr;
         this.tableCount=tableCount;
-        this.averageRating=0;
+        this.averageRating=0.0;
     }
 
     public static ShopEntity from(ManagerEntity managerId,String shopName,String document,String arr,int tableCount){
@@ -76,7 +76,7 @@ public class ShopEntity {
         return this;
     }
 
-    public void reviewAverageRating(int averageRating){
+    public void reviewAverageRating(double averageRating){
         this.averageRating=averageRating;
     }
 }

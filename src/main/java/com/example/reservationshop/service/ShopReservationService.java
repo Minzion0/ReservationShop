@@ -26,8 +26,8 @@ public class ShopReservationService {
     private final ReservationShopRepository reservationShopRepository;
     private final ShopRepository shopRepository;
 
-    public ReservationShopEntity makeReservation(Reservation.Request request, CustomerEntity customerEntity){
-        ShopEntity shopEntity = getShopEntity(request.getShopId());
+    public ReservationShopEntity makeReservation(Long shopId,Reservation.Request request, CustomerEntity customerEntity){
+        ShopEntity shopEntity = getShopEntity(shopId);
 
         LocalDateTime requestDateTime = LocalDateTime.of(request.getReservationDate(), request.getReservationTime());
         LocalDateTime endTime = requestDateTime.plusHours(1);

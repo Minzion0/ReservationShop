@@ -21,11 +21,11 @@ public class ReviewShopEntity {
     @ManyToOne
     private ReservationShopEntity reservationId;
     @Column(nullable = false,length = 5)
-    private float reviewRating;
+    private double reviewRating;
     @Column(nullable = false,length = 10)
     private String document;
 
-    private ReviewShopEntity( ReservationShopEntity reservationId, float reviewRating, String document){
+    private ReviewShopEntity( ReservationShopEntity reservationId, double reviewRating, String document){
         this.id=null;
         this.reservationId = reservationId;
         this.reviewRating=reviewRating;

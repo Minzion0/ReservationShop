@@ -1,8 +1,6 @@
 package com.example.reservationshop.service;
 
-import com.example.reservationshop.entity.CustomerEntity;
-import com.example.reservationshop.entity.ReservationShopEntity;
-import com.example.reservationshop.entity.ReviewShopEntity;
+import com.example.reservationshop.entity.*;
 import com.example.reservationshop.model.Review;
 import com.example.reservationshop.repository.ReservationShopRepository;
 import com.example.reservationshop.repository.ShopReviewRepository;
@@ -12,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -34,16 +33,56 @@ public class ShopReviewService {
         }
 
         ReviewShopEntity reviewShopEntity = ReviewShopEntity.from(reservationShopEntity, request);
+        ReviewShopEntity result = this.shopReviewRepository.save(reviewShopEntity);
+        updateShopRating(reservationShopEntity);
 
-        return this.shopReviewRepository.save(reviewShopEntity);
+        return result;
     }
+
+    private static void updateShopRating(ReservationShopEntity reservationShopEntity) {
+        ShopEntity shopEntity = reservationShopEntity.getShopId();
+        List<ReviewShopEntity> reviews = shopEntity.getReviews();
+        double averageRating = reviews.stream().mapToDouble(ReviewShopEntity::getReviewRating).average().orElse(0.0);
+        shopEntity.reviewAverageRating(averageRating);
+    }
+
     @Transactional(readOnly = true)
     public ReviewShopEntity shopReviewUpdate(CustomerEntity customerEntity, Review.Update request) {
         ReviewShopEntity reviewShopEntity = shopReviewRepository.findById(request.getReviewId()).orElseThrow(() -> new RuntimeException("해당 리뷰가 존재하지 않습니다."));
         if (!Objects.equals(reviewShopEntity.getReservationId().getCustomerId().getId(), customerEntity.getId())){
             throw new RuntimeException("본인만 리뷰수정이 가능합니다.");
         }
+        reviewShopEntity.update(request);
+        updateShopRating(reviewShopEntity.getReservationId());
 
-        return reviewShopEntity.update(request);
+        return reviewShopEntity;
+    }
+    @Transactional(readOnly = true)
+    public void deleteShopReview(UserDetails userDetails, Long reviewId) {
+        CustomerEntity customerEntity = (CustomerEntity) userDetails;
+        ReviewShopEntity reviewShopEntity = getReviewShopEntity(reviewId);
+
+        if (customerEntity.getId()==null){
+            ManagerEntity manager = (ManagerEntity) userDetails;
+
+            ShopEntity shopResult = reviewShopEntity.getReservationId().getShopId();
+            ManagerEntity managerResult = shopResult.getManagerId();
+
+            if (!Objects.equals(manager.getId(), managerResult.getId())){
+                throw new RuntimeException(shopResult.getShopName()+"가계의 매니저만 삭제가 가능합니다.");
+            }
+
+        }else {
+            CustomerEntity customerResult = reviewShopEntity.getReservationId().getCustomerId();
+            if (!customerEntity.getId().equals(customerResult.getId())){
+                throw new RuntimeException("해당 리뷰 작성자만 삭제가 가능합니다.");
+            }
+        }
+        shopReviewRepository.delete(reviewShopEntity);
+    }
+
+    private ReviewShopEntity getReviewShopEntity(Long reviewId) {
+        ReviewShopEntity reviewShopEntity = shopReviewRepository.findById(reviewId).orElseThrow(() -> new RuntimeException("리뷰가 존재하지 않습니다."));
+        return reviewShopEntity;
     }
 }
