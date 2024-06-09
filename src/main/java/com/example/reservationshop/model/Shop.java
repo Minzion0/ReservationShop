@@ -7,20 +7,27 @@ import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Shop {
     @Data
     public static class Request{
+        @NotBlank(message = "Shop name is required")
         private String shopName;
+
+        @NotBlank(message = "Address is required")
         private String arr;
+
+        @NotBlank(message = "Document is required")
         private String document;
+
+        @Min(value = 1, message = "Table count must be at least 1")
         private int tableCount;
 
-        public static ShopEntity toEntity(ManagerEntity managerId, Shop.Request request){
-            return ShopEntity.from(managerId,request.getShopName(), request.getArr(),request.getDocument(), request.getTableCount());
-        }
+
     }
     @Data
     public static class Modify{

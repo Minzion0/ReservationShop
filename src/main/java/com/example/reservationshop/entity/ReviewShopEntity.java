@@ -18,7 +18,8 @@ public class ReviewShopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(targetEntity = ReviewShopEntity.class)
+    @JoinColumn(name = "reservation_id", nullable = false)
     private ReservationShopEntity reservationId;
     @Column(nullable = false,length = 5)
     private double reviewRating;

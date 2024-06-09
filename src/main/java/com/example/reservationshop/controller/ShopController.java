@@ -15,6 +15,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequestMapping("/shop")
@@ -23,7 +25,7 @@ public class ShopController {
 
     private final ShopService shopService;
     @PostMapping
-    public ResponseEntity<?> createShop(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Shop.Request request) {
+    public ResponseEntity<?> createShop(@AuthenticationPrincipal UserDetails userDetails,@Valid @RequestBody Shop.Request request) {
         ManagerEntity manager = (ManagerEntity) userDetails;
         ShopEntity shop = this.shopService.createShop(manager,request);
         return ResponseEntity.ok(shop);

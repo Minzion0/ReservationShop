@@ -17,9 +17,11 @@ public class ReservationShopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(targetEntity = ShopEntity.class)
+    @JoinColumn(name = "shop_id", nullable = false)
     private ShopEntity shopId;
-    @ManyToOne
+    @ManyToOne(targetEntity = CustomerEntity.class)
+    @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customerId;
     private LocalDateTime reservationTime;
     private int checkIn;

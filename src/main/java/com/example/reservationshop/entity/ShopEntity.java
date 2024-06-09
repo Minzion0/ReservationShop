@@ -16,6 +16,7 @@ public class ShopEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(targetEntity = ManagerEntity.class)
+    @JoinColumn(name = "manager_id", nullable = false)
     private ManagerEntity managerId;
     @Column(nullable = false)
     private String document;
