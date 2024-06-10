@@ -13,12 +13,15 @@ import lombok.ToString;
 @ToString
 @Table(name = "manager_shop")
 public class ManagerShopEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private ManagerEntity managerId;
+
     @ManyToOne
     @JoinColumn(name = "shop_id")
     private ShopEntity shopId;
@@ -26,13 +29,15 @@ public class ManagerShopEntity {
     private int managerValid;
 
     private ManagerShopEntity(ManagerEntity managerId, ShopEntity shopId, int managerValid) {
-        this.id=null;
+        this.id = null;
         this.managerId = managerId;
         this.shopId = shopId;
         this.managerValid = managerValid;
     }
 
-    public static ManagerShopEntity from(ManagerEntity managerId,ShopEntity shopId,int managerValid){
-        return new ManagerShopEntity(managerId,shopId,managerValid);
+    // 정적 팩토리 메서드를 통한 객체 생성
+    public static ManagerShopEntity from(ManagerEntity managerId, ShopEntity shopId, int managerValid){
+        return new ManagerShopEntity(managerId, shopId, managerValid);
     }
 }
+

@@ -21,13 +21,17 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Table(name = "customer")
 public class CustomerEntity implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false,unique = true)
+
+    @Column(nullable = false, unique = true)
     private String username;
+
     @Column(nullable = false)
     private String password;
+
     @Convert(converter = StringListConverter.class)
     private List<String> roles;
 
@@ -38,45 +42,53 @@ public class CustomerEntity implements UserDetails {
         this.roles = roles;
     }
 
-    public static CustomerEntity from(String name, String password, List<String> roles){
-        return new CustomerEntity(name,password,roles);
+    // 정적 팩토리 메서드를 통한 객체 생성
+    public static CustomerEntity from(String name, String password, List<String> roles) {
+        return new CustomerEntity(name, password, roles);
     }
 
+    // 사용자의 권한 목록 반환
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
-                //스프링 시큐리티에서 지원하는 롤관련 기능들을 사용
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 
+    // 사용자의 비밀번호 반환
     @Override
     public String getPassword() {
         return this.password;
     }
 
+    // 사용자의 이름(아이디) 반환
     @Override
     public String getUsername() {
         return this.username;
     }
 
+    // 사용자 계정이 만료되지 않았는지 여부 반환
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true; // 현재는 계정 만료 기능 비활성화
     }
 
+    // 사용자 계정이 잠겨있지 않은지 여부 반환
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true; // 현재는 계정 잠금 기능 비활성화
     }
 
+    // 사용자의 자격 증명이 만료되지 않았는지 여부 반환
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true; // 현재는 자격 증명 만료 기능 비활성화
     }
 
+    // 사용자가 활성화되어 있는지 여부 반환
     @Override
     public boolean isEnabled() {
-        return false;
+        return true; // 현재는 사용자 활성화 기능 활성화
     }
 }
+

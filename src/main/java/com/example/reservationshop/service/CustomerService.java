@@ -19,17 +19,32 @@ public class CustomerService implements UserDetailsService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
+
+    /**
+     * 사용자 이름을 이용하여 사용자 정보를 로드하는 메서드입니다.
+     *
+     * @param username 사용자 이름
+     * @return UserDetails 객체
+     * @throws UsernameNotFoundException 사용자를 찾을 수 없는 경우 예외 발생
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.customerRepository.findByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException("존재 하지 않는 ID 입니다. ->"+username));
-
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 ID입니다. ->" + username));
     }
+
+    /**
+     * 새로운 고객을 등록하는 메서드입니다.
+     *
+     * @param customer 고객 가입 정보
+     * @return 등록된 고객 엔티티
+     */
     @Transactional
-    public CustomerEntity signUpCustomer(Auth.SignUp customer){
-        if (this.customerRepository.existsByUsername(customer.getUsername())){
-            throw new RuntimeException("이미 사용 중인 아이디 입니다.");
+    public CustomerEntity signUpCustomer(Auth.SignUp customer) {
+        if (this.customerRepository.existsByUsername(customer.getUsername())) {
+            throw new RuntimeException("이미 사용 중인 아이디입니다.");
         }
+
         CustomerEntity customerEntity = CustomerEntity.from(
                 customer.getUsername(),
                 passwordEncoder.encode(customer.getPassword()),
@@ -39,15 +54,25 @@ public class CustomerService implements UserDetailsService {
         return this.customerRepository.save(customerEntity);
     }
 
-    public CustomerEntity signInCustomer(Auth.SignIn customer){
+    /**
+     * 고객 로그인을 처리하는 메서드입니다.
+     *
+     * @param customer 로그인 요청 정보
+     * @return 로그인된 고객 엔티티
+     */
+    public CustomerEntity signInCustomer(Auth.SignIn customer) {
         CustomerEntity customerEntity = customerRepository.findByUsername(customer.getUsername())
-                .orElseThrow(() -> new RuntimeException("존재 하지 않는 ID 입니다. ->" + customer.getUsername()));
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 ID입니다. ->" + customer.getUsername()));
 
-        if (!this.passwordEncoder.matches(customer.getPassword(),customerEntity.getPassword())){
+        if (!this.passwordEncoder.matches(customer.getPassword(), customerEntity.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
-
         }
 
         return customerEntity;
     }
 }
+
+
+
+
+
