@@ -1,7 +1,6 @@
 package com.example.reservationshop.service;
 
 import com.example.reservationshop.entity.CustomerEntity;
-import com.example.reservationshop.entity.ManagerEntity;
 import com.example.reservationshop.model.Auth;
 import com.example.reservationshop.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class CustomerService implements UserDetailsService {
 
     }
     @Transactional
-    public CustomerEntity signUpCustomer(Auth.SignUp customer){
+    public CustomerEntity signUpCustomer(Auth.SignUpManager customer){
         if (this.customerRepository.existsByUsername(customer.getUsername())){
             throw new RuntimeException("이미 사용 중인 아이디 입니다.");
         }

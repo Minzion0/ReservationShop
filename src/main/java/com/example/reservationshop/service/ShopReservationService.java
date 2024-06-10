@@ -42,7 +42,7 @@ public class ShopReservationService {
 
     }
 
-    public List<Reservation.Response> serchReservationShop(Long shopId, LocalDate date) {
+    public List<Reservation.Response> searchReservationShop(Long shopId, LocalDate date) {
         ShopEntity shopEntity = getShopEntity(shopId);
         LocalDateTime startTime = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
         LocalDateTime endTime = startTime.plusHours(23).plusMinutes(59);

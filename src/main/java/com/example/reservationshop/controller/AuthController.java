@@ -24,7 +24,7 @@ public class AuthController {
     private final ManagerService managerService;
     private final TokenProvider tokenProvider;
     @PostMapping("/manager/signup")
-    public ResponseEntity<?> ManagerSignup(@RequestBody Auth.SignUp request) {
+    public ResponseEntity<?> ManagerSignup(@RequestBody Auth.SignUpManager request) {
         ManagerEntity managerEntity = managerService.signUpManager(request);
 
         return ResponseEntity.ok(managerEntity);
@@ -42,7 +42,7 @@ public class AuthController {
     }
 
     @PostMapping("/shop/signup")
-    public ResponseEntity<?> signup(@RequestBody Auth.SignUp request) {
+    public ResponseEntity<?> signup(@RequestBody Auth.SignUpManager request) {
         CustomerEntity customerEntity = customerService.signUpCustomer(request);
 
         return ResponseEntity.ok(customerEntity);

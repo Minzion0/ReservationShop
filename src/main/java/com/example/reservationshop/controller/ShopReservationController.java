@@ -28,8 +28,8 @@ public class ShopReservationController {
     }
 
     @GetMapping("/{shopId}/reservation")
-    public ResponseEntity<?> serchReservationShop(@PathVariable Long shopId,@RequestParam LocalDate date) {
-        List<Reservation.Response> responses = shopReservationService.serchReservationShop(shopId, date);
+    public ResponseEntity<?> searchReservationShop(@PathVariable Long shopId,@RequestParam LocalDate date) {
+        List<Reservation.Response> responses = shopReservationService.searchReservationShop(shopId, date);
         return ResponseEntity.ok(responses);
     }
 

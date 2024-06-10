@@ -3,6 +3,7 @@ package com.example.reservationshop.service;
 import com.example.reservationshop.entity.ManagerEntity;
 import com.example.reservationshop.entity.ManagerShopEntity;
 import com.example.reservationshop.entity.ShopEntity;
+import com.example.reservationshop.model.Auth;
 import com.example.reservationshop.model.Review;
 import com.example.reservationshop.model.Shop;
 import com.example.reservationshop.repository.ManagerRepository;
@@ -12,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -26,7 +27,9 @@ public class ShopService {
     private final ShopRepository shopRepository;
     private final ManagerRepository managerRepository;
     private final ManagerShopRepository managerShopRepository;
-    private final int MANAGER_VALID = 1;//1 이면 매니저
+    private final PasswordEncoder passwordEncoder;
+   final int MANAGER_VALID = 1;
+   final int EMPLOYEE_VALID = 0;
 
 
     @Transactional(readOnly = true)
@@ -40,9 +43,24 @@ public class ShopService {
 
         ShopEntity saveShop = shopRepository.save(shopEntity);
 
+        //1 이면 매니저
+
         shopManagerSaving(managerEntity, saveShop, MANAGER_VALID);
 
         return saveShop;
+    }
+    @Transactional(readOnly = true)
+    public ManagerEntity signUpShopEmployee(ManagerEntity manager, Auth.SignUpEmployee employee){
+        ShopEntity shopEntity = shopRepository.findById(employee.getShopId()).orElseThrow(() -> new RuntimeException("해당 가계를 찾을수 없습니다."));
+        if (!Objects.equals(shopEntity.getManagerId().getId(), manager.getId())){
+            throw new RuntimeException(shopEntity.getShopName()+"의 매니저만 등록이 가능합니다.");
+        }
+        ;
+        ManagerEntity managerEntity = ManagerEntity.from(employee.getUsername(), passwordEncoder.encode(employee.getPassword()), employee.getRoles());
+        ManagerEntity result = managerRepository.save(managerEntity);
+        managerShopRepository.save(ManagerShopEntity.from(result, shopEntity, EMPLOYEE_VALID));
+
+        return result;
     }
 
     private void shopManagerSaving(ManagerEntity managerEntity, ShopEntity saveShop, int managerValid) {

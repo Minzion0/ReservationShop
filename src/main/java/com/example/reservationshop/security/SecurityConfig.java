@@ -43,17 +43,17 @@ public class SecurityConfig {
                         "/auth/shop/signin"
 
                                 ).permitAll()
-                                .requestMatchers(HttpMethod.GET,"/shop").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/shop/{shopId}").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/shop").hasRole(Role.ROLE_MANAGER.getRole())
-                                .requestMatchers(HttpMethod.PATCH,"/shop").hasRole(Role.ROLE_MANAGER.getRole())
-                                .requestMatchers(HttpMethod.DELETE,"/shop").hasRole(Role.ROLE_MANAGER.getRole())
-                                .requestMatchers(HttpMethod.POST,"/shop/{shopId}/reservation").hasRole(Role.ROLE_CUSTOMER.getRole())
-                                .requestMatchers(HttpMethod.GET,"/shop/{shopId}/reservation").hasRole(Role.ROLE_CUSTOMER.getRole())
-                                .requestMatchers(HttpMethod.PATCH,"/shop/reservation/{reservationId}").hasRole(Role.ROLE_CUSTOMER.getRole())
-                                .requestMatchers(HttpMethod.POST,"/shop/review").hasRole(Role.ROLE_CUSTOMER.getRole())
-                                .requestMatchers(HttpMethod.PATCH,"/shop/review").hasRole(Role.ROLE_CUSTOMER.getRole())
-                                .requestMatchers(HttpMethod.DELETE,"/shop/review").hasAnyRole(Role.ROLE_CUSTOMER.getRole(),Role.ROLE_MANAGER.getRole())
+                                .requestMatchers(HttpMethod.GET, "/shop").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/shop/{shopId}").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/shop").hasRole(Role.ROLE_MANAGER.getRole())
+                                .requestMatchers(HttpMethod.PATCH, "/shop").hasRole(Role.ROLE_MANAGER.getRole())
+                                .requestMatchers(HttpMethod.DELETE, "/shop").hasRole(Role.ROLE_MANAGER.getRole())
+                                .requestMatchers(HttpMethod.POST, "/shop/{shopId}/reservation").hasRole(Role.ROLE_CUSTOMER.getRole())
+                                .requestMatchers(HttpMethod.GET, "/shop/{shopId}/reservation").hasRole(Role.ROLE_CUSTOMER.getRole())
+                                .requestMatchers(HttpMethod.PATCH, "/shop/reservation/{reservationId}").hasRole(Role.ROLE_CUSTOMER.getRole())
+                                .requestMatchers(HttpMethod.POST, "/shop/review").hasRole(Role.ROLE_CUSTOMER.getRole())
+                                .requestMatchers(HttpMethod.PATCH, "/shop/review").hasRole(Role.ROLE_CUSTOMER.getRole())
+                                .requestMatchers(HttpMethod.DELETE, "/shop/review/{reviewId}").hasAnyRole(Role.ROLE_CUSTOMER.getRole(), Role.ROLE_MANAGER.getRole())
                                 .anyRequest().authenticated()
                 ).headers(
                         headersConfigurer ->

@@ -21,6 +21,7 @@ public class ManagerService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -28,8 +29,8 @@ public class ManagerService implements UserDetailsService {
                 .orElseThrow(()-> new UsernameNotFoundException("존재 하지 않는 ID 입니다. ->"+username));
 
     }
-    @Transactional
-    public ManagerEntity signUpManager(Auth.SignUp manager){
+    @Transactional(readOnly = true)
+    public ManagerEntity signUpManager(Auth.SignUpManager manager){
         if (this.managerRepository.existsByUsername(manager.getUsername())){
             throw new RuntimeException("이미 사용 중인 아이디 입니다.");
         }
@@ -41,6 +42,8 @@ public class ManagerService implements UserDetailsService {
 
         return this.managerRepository.save(managerEntity);
     }
+
+
 
     public ManagerEntity signInManager(Auth.SignIn manager){
 
@@ -55,6 +58,8 @@ public class ManagerService implements UserDetailsService {
         return managerEntity;
 
     }
+
+
 
 
 

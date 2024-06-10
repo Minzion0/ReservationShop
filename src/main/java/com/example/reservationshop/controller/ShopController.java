@@ -2,7 +2,9 @@ package com.example.reservationshop.controller;
 
 import com.example.reservationshop.entity.ManagerEntity;
 import com.example.reservationshop.entity.ShopEntity;
+import com.example.reservationshop.model.Auth;
 import com.example.reservationshop.model.Shop;
+import com.example.reservationshop.service.ManagerService;
 import com.example.reservationshop.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,12 @@ public class ShopController {
         ManagerEntity manager = (ManagerEntity) userDetails;
         ShopEntity shop = this.shopService.createShop(manager,request);
         return ResponseEntity.ok(shop);
+    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUpShopEmployee(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Auth.SignUpEmployee request){
+        ManagerEntity manager = (ManagerEntity) userDetails;
+        ManagerEntity managerEntity = this.shopService.signUpShopEmployee(manager, request);
+        return ResponseEntity.ok(managerEntity);
     }
 
     @GetMapping
