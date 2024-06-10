@@ -4,7 +4,6 @@ import com.example.reservationshop.entity.ManagerEntity;
 import com.example.reservationshop.entity.ShopEntity;
 import com.example.reservationshop.model.Auth;
 import com.example.reservationshop.model.Shop;
-import com.example.reservationshop.service.ManagerService;
 import com.example.reservationshop.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

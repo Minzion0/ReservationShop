@@ -13,7 +13,7 @@ public class Auth {
    }
 
    @Data
-    public static class SignUpManager {
+    public static class SignUp {
         private String username;
         private String password;
         private List<String> roles;

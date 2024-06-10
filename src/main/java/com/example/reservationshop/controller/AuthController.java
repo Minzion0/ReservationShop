@@ -23,31 +23,42 @@ public class AuthController {
     private final CustomerService customerService;
     private final ManagerService managerService;
     private final TokenProvider tokenProvider;
+    //매니저 가입
     @PostMapping("/manager/signup")
-    public ResponseEntity<?> ManagerSignup(@RequestBody Auth.SignUpManager request) {
+    public ResponseEntity<?> ManagerSignup(@RequestBody Auth.SignUp request) {
         ManagerEntity managerEntity = managerService.signUpManager(request);
 
         return ResponseEntity.ok(managerEntity);
     }
-
+    //메니저 로그인
     @PostMapping("/manager/signin")
     public ResponseEntity<?> ManagerSignIn(@RequestBody Auth.SignIn request) {
 
         ManagerEntity managerEntity = managerService.signInManager(request);
-        //TODO JWT 발급 구현해야함 구현이 끝나면 토큰을 반환
 
         String token = tokenProvider.generateToken(managerEntity.getUsername(), managerEntity.getRoles());
         log.info("{} login",managerEntity.getUsername());
         return ResponseEntity.ok(token);
     }
 
+    /**
+     * 고객 회원 가입
+     * @param request
+     *
+     * @return
+     */
     @PostMapping("/shop/signup")
-    public ResponseEntity<?> signup(@RequestBody Auth.SignUpManager request) {
+    public ResponseEntity<?> signup(@RequestBody Auth.SignUp request) {
         CustomerEntity customerEntity = customerService.signUpCustomer(request);
 
         return ResponseEntity.ok(customerEntity);
     }
 
+    /**
+     * 고객 로그인
+     * @param request
+     * @return 토큰 반환
+     */
     @PostMapping("/shop/signin")
     public ResponseEntity<?> signin(@RequestBody Auth.SignIn request) {
         CustomerEntity customerEntity = customerService.signInCustomer(request);

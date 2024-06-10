@@ -30,7 +30,7 @@ public class ManagerService implements UserDetailsService {
 
     }
     @Transactional(readOnly = true)
-    public ManagerEntity signUpManager(Auth.SignUpManager manager){
+    public ManagerEntity signUpManager(Auth.SignUp manager){
         if (this.managerRepository.existsByUsername(manager.getUsername())){
             throw new RuntimeException("이미 사용 중인 아이디 입니다.");
         }

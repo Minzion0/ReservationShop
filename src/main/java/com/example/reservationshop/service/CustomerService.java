@@ -26,7 +26,7 @@ public class CustomerService implements UserDetailsService {
 
     }
     @Transactional
-    public CustomerEntity signUpCustomer(Auth.SignUpManager customer){
+    public CustomerEntity signUpCustomer(Auth.SignUp customer){
         if (this.customerRepository.existsByUsername(customer.getUsername())){
             throw new RuntimeException("이미 사용 중인 아이디 입니다.");
         }
