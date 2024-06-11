@@ -71,7 +71,7 @@ public class ShopEntity {
     public static ShopEntity from(Long shopId, ManagerEntity managerId, String shopName, String document, String arr, int tableCount) {
         return new ShopEntity(shopId, managerId, shopName, document, arr, tableCount);
     }
-
+    //엔티티 수정 메소드
     public ShopEntity modify(Shop.Modify request) {
         if (request.getArr() != null) {
             this.arr = request.getArr();
@@ -84,7 +84,7 @@ public class ShopEntity {
         }
         return this;
     }
-
+    //평균 별점 입력 메소드
     public void reviewAverageRating(double averageRating) {
         this.averageRating = averageRating;
     }
